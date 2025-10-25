@@ -6,7 +6,7 @@
 .PARAMETER SnipDir
     The name of the directory to create and initialize the uv project in.
    #>
-<#--Version-v1.1.0-20251025_1453 #>
+<#--Version-v1.2.0-20251025_1618 #>
 	
 param(
     [string]$StepsID
@@ -27,19 +27,31 @@ if ($PSBoundParameters.ContainsKey('StepsID')) {
 #**==Functions==*
 function show_steps {
     switch ($StepsID) {
+        "index01" {
+             # Display steps of git
+            Write-Host "*--Index-Show Steps--*" -ForegroundColor Red
+
+            $steps_git_push = @"
+*--Git--*
+git01: Steps of Git Push
+git02: Steps of Git Branch merging
+git03: Steps to reset local repo to match remote repo
+"@
+            Write-Host $steps_git_push -ForegroundColor Green
+		}
         "git01" {
              # Display steps of git
             Write-Host "*--Steps of Git Push--*" -ForegroundColor Red
 
             $steps_git_push = @"
-@01. git status
-@02. git add .
-@03. git status
-@04. git git commit -m "get_df_by_range(…) added"
-@05. git branch #Check current active branch
-@06. git remote -v #Check remote 
-@07. #git push -u origin main #Push to remote one-time
-@08. git push #Push to remote subsequent times
+git status
+git add .
+git status
+git git commit -m "get_df_by_range(…) added"
+git branch #Check current active branch
+git remote -v #Check remote 
+#git push -u origin main #Push to remote one-time
+git push #Push to remote subsequent times
 "@
             Write-Host $steps_git_push -ForegroundColor Green
 		}
@@ -48,17 +60,27 @@ function show_steps {
             Write-Host "*--Steps of Git Branch merging--*" -ForegroundColor Red
 
             $steps_git_push = @"
-#*--Branch Merging--*
-@01. git branch
-@02. git switch -c xbr
-#--Work and commit changes
-@03. git push -u origin xbr
-@04. git switch main
-@05. git pull
-@06. git merge xbr
+git branch
+git switch -c xbr
+git push -u origin xbr
+git switch main
+git pull
+git merge xbr
 #--Delete branch(Optional)
-@07. git branch -d xbr
-@08. git push origin --delete xbr
+git branch -d xbr
+git push origin --delete xbr
+"@
+            Write-Host $steps_git_push -ForegroundColor Green
+		}
+        "git03" {
+             # Display steps of git
+            Write-Host "*--Steps to reset local repo to match remote repo--*" -ForegroundColor Red
+
+            $steps_git_push = @"
+git status #Show changes, untracked files
+git fetch origin #Fetch remote metadata
+git reset --hard origin/main #Discard local changes
+git clean -df #Remove untracked files
 "@
             Write-Host $steps_git_push -ForegroundColor Green
 		}
